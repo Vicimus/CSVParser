@@ -1,0 +1,25 @@
+{
+    "name": "vicimus/c-sv-parser",
+    "description": "",
+    "authors": [
+        {
+            "name": "Vicimus",
+            "email": "dev@vicimus.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations",
+            "src/classes",
+            "src/controllers"
+        ],
+        "psr-0": {
+            "Vicimus\\CSVParser\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
