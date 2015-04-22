@@ -70,6 +70,36 @@ class MainController extends \BaseController
 
 	public function finish()
 	{
-		dd(\Input::all());
+		$inserts = json_decode(\Input::get('inserts'));
+		$schema = \Input::get('schema');
+		$ignoreDuplicates = \Input::get('duplicates') ? true : false;
+		$count = 0;
+		foreach($inserts as $row)
+		{
+			$skip = false;
+			if($ignoreDuplicates)
+			{
+				$check = \DB::table($schema);
+				foreach(get_object_vars($row) as $col => $value)
+				{
+					$check = $check->where($col, $value);
+				}
+
+				$exists = $check->first();
+
+				if($exists)
+					$skip = true;
+			}
+			
+			if(!$skip)
+			{
+				\DB::table($schema)->insert(get_object_vars($row));
+				$count++;
+			}
+				
+		}
+
+		return $count.' records inserted';
+			
 	}
 }
