@@ -41,13 +41,13 @@
 	<h1>Review Import Data</h1>
 	<p class="border-bottom">Below are the results of the CSV import using the columns specified. This is the final step before importing the data into the database.</p>
 	<button class="btn btn-default center" data-finish>Finish</button>
+	<div class="text-right"><label><input type="checkbox" id="duplicateCheck" /> Ignore Duplicates</label></div>
 	<table data-inserts>
 		<thead>
 			<tr>
 			</tr>
 		</thead>
 		<tbody>
-
 		</tbody>
 	</table>
 	<button class="btn btn-default center" data-finish>Finish</button>
@@ -55,6 +55,8 @@
 
 <form id="finish" action="{{\URL::route('csvparser.finish')}}" method="post">
 	<input type="hidden" name="inserts" id="inserts" />
+	<input type="hidden" name="schema" id="finish-schema" />
+	<input type="hidden" name="duplicates" id="duplicates" /> 
 </form>
 
 <script type="text/javascript">
@@ -262,7 +264,10 @@ $(document).ready(function(){
 			if($("tr[data-insert-index="+index+"]").find('input').prop('checked'))
 				sendInserts.push(value);
 		});
-
+		$("#finish-schema").val(parser.schema);
+		if($("#duplicateCheck").prop('checked'))
+			$("#duplicates").val('true');
+		
 		var data = JSON.stringify(sendInserts);
 		$("#inserts").val(data);
 		$("#finish").submit();
