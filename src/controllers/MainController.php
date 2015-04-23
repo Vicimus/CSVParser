@@ -93,13 +93,21 @@ class MainController extends \BaseController
 			
 			if(!$skip)
 			{
-				\DB::table($schema)->insert(get_object_vars($row));
-				$count++;
+				try
+				{
+					\DB::table($schema)->insert(get_object_vars($row));
+					$count++;
+				}
+				catch(\Illuminate\Database\QueryException $ex)
+				{
+					return \Redirect::back()->with('csv_error', $ex->getMessage());
+				}
+				
 			}
 				
 		}
 
-		return $count.' records inserted';
+		return \Redirect::back()->with('csv_success', $count.' records inserted successfully');
 			
 	}
 }
