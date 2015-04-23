@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="{{asset('packages/vicimus/c-sv-parser/interface.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('packages/Vicimus/csvparser/interface.css')}}">
 <form id="start" action="{{\URL::route('csvparser.start')}}" method="post" enctype="multipart/form-data" class="form-inline">
 	<div class="col-md-6 col-md-offset-3" data-csv-step="1">
 		<div class="form-group">
@@ -20,6 +20,20 @@
 		<button id="start" class="btn btn-default">Start</button>
 	</div>
 </form>
+
+@if(\Session::has('csv_error'))
+<div class="alert alert-danger" syle="clear:both">
+	<h4>Error</h4>
+	<p>{{\Session::get('csv_error')}}</p>
+</div>
+@endif
+
+@if(\Session::has('csv_success'))
+<div class="alert alert-success" style="clear:both">
+	<h4>Success</h4>
+	<p>{{\Session::get('csv_success')}}</p>
+</div>
+@endif
 
 <div data-step="2">
 	<h1>Column Associations</h1>
